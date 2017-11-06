@@ -45,4 +45,6 @@ public class NewStreamTest {
 		Map<String,List<Dish>> result=menu.parallelStream().collect(groupingBy(Dish::getName));
 		return result;
 	}
+
+	
 }
