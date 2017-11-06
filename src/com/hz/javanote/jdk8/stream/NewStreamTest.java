@@ -16,6 +16,7 @@ public class NewStreamTest {
 		//printMap(getAllDishNameDishMap(menu));
 		printMap(getAllDishNameDishListMap(menu));
 	}
+
 	
 	public static void printList(List<? extends Object> list){
 		list.parallelStream().forEach(l->{System.out.println(l.toString());});
@@ -44,6 +45,4 @@ public class NewStreamTest {
 		Map<String,List<Dish>> result=menu.parallelStream().collect(groupingBy(Dish::getName));
 		return result;
 	}
-	
-	
 }
