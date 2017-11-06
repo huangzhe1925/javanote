@@ -53,13 +53,13 @@ public class StreamFilter {
 		return dishes;
 	}
 	
-	public static List<String> getUniqueCharacterList(String sentence){
-		List<String> uniqueCharacters =sentence.split(",| ").
-				words.stream()
-				.map(w -> w.split(""))
-				.flatMap(Arrays::stream)
-				.distinct()
-				.collect(Collectors.toList());
-	}
+//	public static List<String> getUniqueCharacterList(String sentence){
+//		List<String> uniqueCharacters =sentence.split(",| ").
+//				words.stream()
+//				.map(w -> w.split(""))
+//				.flatMap(Arrays::stream)
+//				.distinct()
+//				.collect(Collectors.toList());
+//	}
 
 }
