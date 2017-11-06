@@ -77,7 +77,7 @@ public class NewStreamTest {
 		}
 		@Override
 		public String toString() {
-			return "Dish [name=" + name + ", vegetarian=" + vegetarian + ", calories=" + calories + ", type=" + type
+			return "Dish [name=" + name +", calories=" + calories + ", type=" + type
 					+ "]";
 		}
 		public boolean isVegetarian() {
