@@ -1,4 +1,4 @@
-package com.hz.javanote.springbatch.simpleexample;
+package com.hz.javanote.springbatch.tasklet;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -8,18 +8,22 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
+
 	public static void main(String[] args) {
 
-		String[] springConfig  = 
-			{	
-				"springbatch/simple/jobs/job-hello-world.xml" 
-			};
-		
-		ApplicationContext context = 
-				new ClassPathXmlApplicationContext(springConfig);
-		
+		App obj = new App();
+		obj.run();
+
+	}
+
+	private void run() {
+
+		String[] springConfig = { "springbatch/tasklet/spring/batch/jobs/job-read-files.xml" };
+
+		ApplicationContext context = new ClassPathXmlApplicationContext(springConfig);
+
 		JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
-		Job job = (Job) context.getBean("helloWorldJob");
+		Job job = (Job) context.getBean("readMultiFileJob");
 
 		try {
 
@@ -29,9 +33,11 @@ public class App {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 
 		System.out.println("Done");
 
 	}
+
 }

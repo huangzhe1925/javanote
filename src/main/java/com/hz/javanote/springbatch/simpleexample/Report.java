@@ -1,4 +1,4 @@
-package com.hz.javanote.springbatch.simpleexample.model;
+package com.hz.javanote.springbatch.simpleexample;
 
 import java.math.BigDecimal;
 import java.util.Date;
