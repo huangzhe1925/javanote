@@ -11,8 +11,9 @@ public class StreamFilter {
 		List<Dish> menu = Dish.getMenu();
 
 		// printMap(getAllDishNameDishMap(menu));
-		printList(getVegetarianDishList(menu));
-		printList(getDistinctNumberList(Arrays.asList(1, 2, 1, 3, 3, 2, 4)));
+		//printList(getVegetarianDishList(menu));
+		//printList(getDistinctNumberList(Arrays.asList(1, 2, 1, 3, 3, 2, 4)));
+		printList(getUniqueCharacterList("Hello World"));
 
 	}
 
@@ -53,13 +54,8 @@ public class StreamFilter {
 		return dishes;
 	}
 	
-//	public static List<String> getUniqueCharacterList(String sentence){
-//		List<String> uniqueCharacters =sentence.split(",| ").
-//				words.stream()
-//				.map(w -> w.split(""))
-//				.flatMap(Arrays::stream)
-//				.distinct()
-//				.collect(Collectors.toList());
-//	}
+	public static List<String> getUniqueCharacterList(String sentence){
+		return Arrays.stream(sentence.split(" ")).map(w -> w.split("")).flatMap(Arrays::stream).distinct().collect(toList());
+	}
 
 }
