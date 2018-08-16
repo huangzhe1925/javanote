@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConditionTest {
-	public static ReentrantLock lock = new ReentrantLock();
+	public static  ReentrantLock lock = new ReentrantLock();
 	public static Condition condition = lock.newCondition();
 
 	public static void main(String[] args) {

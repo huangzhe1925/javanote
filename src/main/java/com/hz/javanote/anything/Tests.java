@@ -6,21 +6,58 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import org.springframework.util.CollectionUtils;
+
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 
-public class Tests {
+public class  Tests {
+
+	public static final Map<String, List<String>> NIC_MODEL_TO_NIC_DRIVERS_MAP = Maps.newHashMap();
+
+	static {
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("i350", Lists.newArrayList("NIC_DRIVER_IGBN"));
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("x520", Lists.newArrayList("NIC_DRIVER_IXGBEN"));
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("x540", Lists.newArrayList("NIC_DRIVER_IXGBEN"));
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("x550", Lists.newArrayList("NIC_DRIVER_IXGBEN"));
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("x710", Lists.newArrayList("NIC_DRIVER_I40EN"));
+		NIC_MODEL_TO_NIC_DRIVERS_MAP.put("bcm57414", Lists.newArrayList("NIC_DRIVER_BNXTNET", "NIC_DRIVER_BNXTROCE"));
+	}
 
 	public static void main(String args[]) throws Exception {
-		String testCase = "13";
+		String testCase = "20";
 		Class<?> threadClazz = Tests.class;
 		Method method = threadClazz.getMethod("test" + testCase);
 		method.invoke(method);
+	}
+
+	public static void test20() {
+		Set<String> models = Sets.newHashSet("fdf");
+		List<String> nicDriverTypes = Lists.newArrayList();
+		if (CollectionUtils.isEmpty(models)) {
+			return;
+		}
+		nicDriverTypes.addAll(models.stream().filter(model -> NIC_MODEL_TO_NIC_DRIVERS_MAP.containsKey(model))
+				.map(model -> NIC_MODEL_TO_NIC_DRIVERS_MAP.get(model)).flatMap(dirverType -> dirverType.stream())
+				.collect(Collectors.toList()));
+		
+		nicDriverTypes.stream().forEach(driver -> System.out.println(driver));
+	}
+
+	public static void test19() {
+		Multimap<String, String> map = ArrayListMultimap.create();
 	}
 
 	public static void test18() {
@@ -89,7 +126,7 @@ public class Tests {
 		Key key2 = new Key("2");
 		set.add(key1);
 		set.add(key2);
-		
+
 		System.out.println(set.size());
 	}
 
