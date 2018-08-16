@@ -47,9 +47,9 @@ public class LearnCompleteFuture {
 	private static void useCompletableFuture() throws InterruptedException, ExecutionException {
 		System.out.println("CompletableFuture");
 		CompletableFuture<Void> futureA = CompletableFuture.runAsync(() -> work("A2"));
-		CompletableFuture<Void> futureB = CompletableFuture.runAsync(() -> work("B2"));
-		CompletableFuture<Void> futureC = CompletableFuture.runAsync(() -> work("C2"));
-		futureA.runAfterEitherAsync(futureB, ()-> work("C2")).get();
+		CompletableFuture<Void> futureB = CompletableFuture.runAsync(() -> {work("B2");work("B3");});
+		CompletableFuture<Void> futureC = CompletableFuture.runAsync(() -> {work("C2");work("C3");});
+		futureA.runAfterBoth(futureB, ()-> work("C2")).get();
 	}
  
 	public static Void work(String name) {
