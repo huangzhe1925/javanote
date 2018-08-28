@@ -1,11 +1,13 @@
 package com.hz.javanote.anything;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -37,10 +39,23 @@ public class  Tests {
 	}
 
 	public static void main(String args[]) throws Exception {
-		String testCase = "20";
+		String testCase = "21";
 		Class<?> threadClazz = Tests.class;
 		Method method = threadClazz.getMethod("test" + testCase);
 		method.invoke(method);
+	}
+	
+	public static void test21() {
+		List<String> list=new ArrayList<String>(Arrays.asList("1","2","3","4","5","6"));
+		Iterator<String> iter=list.iterator();
+		while(iter.hasNext()) {
+			String num=iter.next();
+			if(num.equals("3")) {
+				iter.remove();
+				continue;
+			}
+			System.out.println(num);
+		}
 	}
 
 	public static void test20() {
