@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -24,9 +29,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
+import com.hz.javanote.thread.CachedThreadPool;
 
-public class  Tests {
+public class Tests {
 
+	
+	
 	public static final Map<String, List<String>> NIC_MODEL_TO_NIC_DRIVERS_MAP = Maps.newHashMap();
 
 	static {
@@ -39,18 +47,85 @@ public class  Tests {
 	}
 
 	public static void main(String args[]) throws Exception {
-		String testCase = "21";
+		String testCase = "26";
 		Class<?> threadClazz = Tests.class;
 		Method method = threadClazz.getMethod("test" + testCase);
 		method.invoke(method);
 	}
 	
+	public static void test26() throws Exception {
+	    System.out.println(Boolean.parseBoolean(""));
+	}
+	
+	public static void test25() throws Exception {
+		 if (Step.UPGRADE_CHECK.compareTo(Step.UPGRADE_IMPORT) >= 0) {
+			 System.out.println(">=0");
+		 }
+	}
+
+	public static void test24() throws Exception {
+		int values[] = {  6, 3, 9,5 };
+		
+//		ExecutorService exec = Executors.newCachedThreadPool();
+//		for (int value : values) {
+//			exec.submit(new Runner(value));
+//		}
+//		exec.shutdown();
+//		exec.awaitTermination(12, TimeUnit.SECONDS);
+	}
+
+	public static class Runner implements Runnable {
+		private final int originalValue;
+		private int value;
+
+		public Runner(int value) {
+			this.value = value;
+			this.originalValue = value;
+		}
+
+		@Override
+		public void run() {
+			while (value > 0) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				value--;
+			}
+			System.out.println(originalValue);
+		}
+
+	}
+
+	public static void test23() {
+		String eleName = "BP13G+ 0:1";
+		System.out.println(eleName.matches("^BP((?!EXP).)*$"));
+	}
+
+	public static void test22() {
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 10000; i++) {
+			String str = String.format("Anything for test %s", i);
+		}
+		long end = System.currentTimeMillis();
+		System.out.println(end - start);
+
+		start = System.currentTimeMillis();
+		for (int i = 0; i < 10000; i++) {
+			String str1 = "Adnything for test %s" + i;
+		}
+		end = System.currentTimeMillis();
+		System.out.println(end - start);
+
+	}
+
 	public static void test21() {
-		List<String> list=new ArrayList<String>(Arrays.asList("1","2","3","4","5","6"));
-		Iterator<String> iter=list.iterator();
-		while(iter.hasNext()) {
-			String num=iter.next();
-			if(num.equals("3")) {
+		List<String> list = new ArrayList<String>(Arrays.asList("1", "2", "3", "4", "5", "6"));
+		Iterator<String> iter = list.iterator();
+		while (iter.hasNext()) {
+			String num = iter.next();
+			if (num.equals("3")) {
 				iter.remove();
 				continue;
 			}
@@ -67,7 +142,7 @@ public class  Tests {
 		nicDriverTypes.addAll(models.stream().filter(model -> NIC_MODEL_TO_NIC_DRIVERS_MAP.containsKey(model))
 				.map(model -> NIC_MODEL_TO_NIC_DRIVERS_MAP.get(model)).flatMap(dirverType -> dirverType.stream())
 				.collect(Collectors.toList()));
-		
+
 		nicDriverTypes.stream().forEach(driver -> System.out.println(driver));
 	}
 
@@ -322,6 +397,15 @@ public class  Tests {
 	}
 
 }
+
+enum Step {
+    REBOOT, RPM_INSTALL, UPGRADE_CHECK, UPGRADE_EXPORT, FB_ISNTALL, UPGRADE_IMPORT, UPGRADE_FINALIZE, UPGRADE_COMPLETED;
+
+    private Step next() {
+        return values()[ordinal() + 1];
+    }
+}
+
 
 class TestClause {
 	public TestClause() {
